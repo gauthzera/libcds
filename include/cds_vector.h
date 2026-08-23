@@ -20,7 +20,7 @@ bool cds_vector_empty(const CDSVector *v);
 bool cds_vector_push_back(CDSVector *v, int value);
 bool cds_vector_pop_back(CDSVector *v,int *value);
 bool cds_vector_insert(CDSVector *v,size_t index,int value);
-bool cds_vector_erase(CDSVector *v,size_t index);
+bool cds_vector_erase(CDSVector *v,size_t index, int *value);
 bool cds_vector_remove(CDSVector *v,int value);
 void cds_vector_clear(CDSVector *v);
 void cds_vector_sort(CDSVector *v);

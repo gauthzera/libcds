@@ -23,7 +23,7 @@ bool cds_list_insert(CDSList *list, size_t index,int value);
 
 bool cds_list_pop_front(CDSList *list, int *value);
 bool cds_list_pop_back(CDSList *list, int *value);
-bool cds_list_erase(CDSList *list, size_t index);
+bool cds_list_erase(CDSList *list, size_t index, int *value);
 bool cds_list_remove(CDSList *list, int value);
 
 void cds_list_clear(CDSList *list);
