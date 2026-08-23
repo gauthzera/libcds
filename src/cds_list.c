@@ -141,7 +141,7 @@ bool cds_list_insert(CDSList *list, size_t index, int value){
 }
 
 bool cds_list_pop_front(CDSList *list, int *value){
-    if(list == NULL || list->size == 0 || value == NULL)return false;
+    if(list == NULL || list->size == 0)return false;
     
     CDSListNode *removed=list->first;
     list->first=removed->next;
@@ -150,7 +150,10 @@ bool cds_list_pop_front(CDSList *list, int *value){
         list->last = NULL;
     }    
     
-    *value=removed->value;
+    if(value != NULL){
+        *value=removed->value;
+    }
+
     free(removed);
 
     list->size--;
@@ -158,7 +161,7 @@ bool cds_list_pop_front(CDSList *list, int *value){
 }
 
 bool cds_list_pop_back(CDSList *list, int *value){
-    if(list == NULL || list->size == 0 || value == NULL) return false;
+    if(list == NULL || list->size == 0) return false;
     
     if(list->size == 1){
         return cds_list_pop_front(list, value);
@@ -174,7 +177,10 @@ bool cds_list_pop_back(CDSList *list, int *value){
 
     prev->next=NULL;
 
-    *value=removed->value;
+    if(value != NULL){
+        *value=removed->value;
+    } 
+
     list->last=prev;
 
     free(removed);
@@ -184,12 +190,11 @@ bool cds_list_pop_back(CDSList *list, int *value){
     return true;
 }
 
-bool cds_list_erase(CDSList *list, size_t index){
+bool cds_list_erase(CDSList *list, size_t index, int *value){
     if(list == NULL || index >= list->size)return false;
     
     if(index == 0){
-        int value;
-        return cds_list_pop_front(list, &value);
+        return cds_list_pop_front(list, value);
     }
 
     size_t cnt=0;
@@ -206,6 +211,10 @@ bool cds_list_erase(CDSList *list, size_t index){
     if(removed == list->last){
         list->last=prev;
     }
+    
+     if(value != NULL){
+        *value=removed->value;
+    }
 
     free(removed);
     list->size--;    
@@ -217,8 +226,7 @@ bool cds_list_remove(CDSList *list, int value){
     if(list == NULL || list->size == 0)return false;
 
     if(list->first->value == value){
-        int value;
-        return cds_list_pop_front(list, &value);
+        return cds_list_pop_front(list, NULL);
     }
     
     CDSListNode *prev=list->first;

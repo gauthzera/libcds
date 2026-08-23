@@ -76,9 +76,12 @@ bool cds_vector_push_back(CDSVector *v,int value){
 }
 
 bool cds_vector_pop_back(CDSVector *v,int *value){
-    if(v == NULL || value == NULL || v->size == 0) return false;
+    if(v == NULL || v->size == 0) return false;
 
-    *value=v->data[v->size - 1];
+    if(value != NULL){
+        *value=v->data[v->size - 1];
+    }
+
     v->size--;
 
     return true;
@@ -106,9 +109,13 @@ bool cds_vector_insert(CDSVector *v, size_t index, int value){
     return true;
 }
 
-bool cds_vector_erase(CDSVector *v, size_t index){
+bool cds_vector_erase(CDSVector *v, size_t index, int *value){
     if(v == NULL || index >= v->size)return false;
 
+    if(value != NULL){
+        *value=v->data[index];
+    }
+    
     for(size_t i=index; i< v->size-1; i++){
         v->data[i]=v->data[i+1];
     }
@@ -123,7 +130,7 @@ bool cds_vector_remove(CDSVector *v, int value){
     
     for(size_t i=0; i< v->size; i++){
         if(v->data[i] == value){
-            return cds_vector_erase(v, i);
+            return cds_vector_erase(v, i, NULL);
         }
     }
 

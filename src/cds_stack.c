@@ -80,12 +80,15 @@ bool cds_stack_push(CDSStack *stack,int value){
 }
 
 bool cds_stack_pop(CDSStack *stack,int *value){
-    if(stack == NULL || stack->size == 0 || value == NULL)return false;
+    if(stack == NULL || stack->size == 0)return false;
     
     CDSStackNode *removed=stack->top;
     stack->top=removed->next;
     
-    *value=removed->value;
+    if(value != NULL){
+        *value=removed->value;
+    }
+
     free(removed);
 
     stack->size--;

@@ -96,7 +96,7 @@ bool cds_queue_push(CDSQueue *queue, int value){
 }
 
 bool cds_queue_pop(CDSQueue *queue, int *value){
-    if(queue == NULL || queue->size == 0 || value == NULL)return false;
+    if(queue == NULL || queue->size == 0)return false;
     
     CDSQueueNode *removed = queue->front;
     queue->front = removed->next;
@@ -105,7 +105,10 @@ bool cds_queue_pop(CDSQueue *queue, int *value){
         queue->back = NULL;
     }
     
-    *value=removed->value;
+    if(value != NULL){
+        *value=removed->value;
+    }
+
     queue->size--;
 
     free(removed);
