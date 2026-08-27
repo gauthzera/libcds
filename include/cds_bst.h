@@ -18,6 +18,10 @@ bool cds_bst_min(const CDSBST *tree, int *value);
 bool cds_bst_max(const CDSBST *tree, int *value);
 bool cds_bst_height(const CDSBST *tree, int *value);
 
+void cds_bst_inorder(const CDSBST *tree, void(*visit)(int));
+void cds_bst_preorder(const CDSBST *tree, void(*visit)(int));
+void cds_bst_postorder(const CDSBST *tree, void(*visit)(int));
+
 //Modification
 bool cds_bst_insert(CDSBST *tree, int value);
 bool cds_bst_remove(CDSBST *tree, int value);
