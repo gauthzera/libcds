@@ -120,6 +120,54 @@ bool cds_bst_height(const CDSBST *tree, int *value){
     return true;
 }
 
+static void bst_inorder(const CDSBSTNode *root, void(*visit)(int)){
+    if(root!=NULL){
+        bst_inorder(root->left, visit);
+
+        visit(root->value);
+
+        bst_inorder(root->right, visit);
+    }
+}
+
+void cds_bst_inorder(const CDSBST* tree, void(*visit)(int)){
+    if(tree == NULL || visit == NULL)return; 
+    
+    bst_inorder(tree->root, visit);
+}
+
+static void bst_preorder(const CDSBSTNode *root, void(*visit)(int)){
+    if(root!=NULL){
+        visit(root->value);
+
+        bst_preorder(root->left, visit);
+
+        bst_preorder(root->right, visit);
+    }
+}
+
+void cds_bst_preorder(const CDSBST* tree, void(*visit)(int)){
+    if(tree == NULL || visit == NULL)return; 
+    
+    bst_preorder(tree->root, visit);
+}
+
+static void bst_postorder(const CDSBSTNode *root, void(*visit)(int)){
+    if(root!=NULL){
+        bst_postorder(root->left, visit);
+
+        bst_postorder(root->right, visit);
+
+        visit(root->value);
+    }
+}
+
+void cds_bst_postorder(const CDSBST* tree, void(*visit)(int)){
+    if(tree == NULL || visit == NULL)return; 
+    
+    bst_postorder(tree->root, visit);
+}
+
 static bool bst_insert(CDSBSTNode **root, int value){
     if(*root == NULL){
         *root = cds_bst_node_create(value);

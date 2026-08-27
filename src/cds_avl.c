@@ -121,6 +121,54 @@ bool cds_avl_height(const CDSAVL *tree, int *value){
     return true;
 }
 
+static void avl_inorder(const CDSAVLNode *root, void(*visit)(int)){
+    if(root!=NULL){
+        avl_inorder(root->left, visit);
+
+        visit(root->value);
+
+        avl_inorder(root->right, visit);
+    }
+}
+
+void cds_avl_inorder(const CDSAVL* tree, void(*visit)(int)){
+    if(tree == NULL || visit == NULL)return; 
+    
+    avl_inorder(tree->root, visit);
+}
+
+static void avl_preorder(const CDSAVLNode *root, void(*visit)(int)){
+    if(root!=NULL){
+        visit(root->value);
+
+        avl_preorder(root->left, visit);
+
+        avl_preorder(root->right, visit);
+    }
+}
+
+void cds_avl_preorder(const CDSAVL* tree, void(*visit)(int)){
+    if(tree == NULL || visit == NULL)return; 
+    
+    avl_preorder(tree->root, visit);
+}
+
+static void avl_postorder(const CDSAVLNode *root, void(*visit)(int)){
+    if(root!=NULL){
+        avl_postorder(root->left, visit);
+
+        avl_postorder(root->right, visit);
+
+        visit(root->value);
+    }
+}
+
+void cds_avl_postorder(const CDSAVL* tree, void(*visit)(int)){
+    if(tree == NULL || visit == NULL)return; 
+    
+    avl_postorder(tree->root, visit);
+}
+
 static int avl_max(int a,int b){
     return (a > b) ? a : b;
 }
