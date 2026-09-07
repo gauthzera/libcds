@@ -71,8 +71,19 @@ bool cds_trie_empty(const CDSTrie *trie){
     return trie->size == 0;
 }
 
+static bool trie_valid_string(const char *str){
+    if(str == NULL || str[0] == '\0')return false; 
+
+    for(size_t i=0; str[i]!='\0'; i++){
+        if(str[i] < 'a' || str[i]>'z'){
+                return false;
+        }
+    }
+    return true;
+}
+
 bool cds_trie_contains(const CDSTrie *trie, const char *word){
-    if(trie == NULL || word == NULL)return false;
+    if(trie == NULL || !trie_valid_string(word))return false;
     
     CDSTrieNode *cur = trie->root;
 
@@ -88,7 +99,7 @@ bool cds_trie_contains(const CDSTrie *trie, const char *word){
 }
 
 bool cds_trie_starts_with(const CDSTrie *trie, const char *prefix){
-    if(trie == NULL || prefix == NULL)return false;
+    if(trie == NULL || !trie_valid_string(prefix))return false;
 
     CDSTrieNode *cur = trie->root;
 
@@ -104,7 +115,7 @@ bool cds_trie_starts_with(const CDSTrie *trie, const char *prefix){
 }
 
 bool cds_trie_insert(CDSTrie *trie, const char *word){
-    if(trie == NULL || word == NULL || word[0] == '\0')return false;
+    if(trie == NULL || !trie_valid_string(word))return false;
 
     CDSTrieNode *cur = trie->root;
     
@@ -160,7 +171,7 @@ static bool trie_remove(CDSTrieNode *node, const char *word, size_t pos){
 }
 
 bool cds_trie_remove(CDSTrie *trie, const char *word){
-    if(trie == NULL || word == NULL)return false;
+    if(trie == NULL || !trie_valid_string(word))return false;
     
     if(!cds_trie_contains(trie, word))return false;
     
