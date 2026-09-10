@@ -66,7 +66,7 @@ For example:
 #include "libcds.h"
 #include <stdio.h>
 
-int main(void) {
+int main() {
     CDSVector *vector = cds_vector_create();
 
     if (vector == NULL) {
@@ -89,19 +89,35 @@ int main(void) {
 }
 ```
 
-Compile it with:
+Assuming `libcds` is cloned inside your project directory:
 
-```bash
-gcc main.c -Iinclude libcds.a -o main
+```text
+my-project/
+├── main.c
+└── libcds/
 ```
 
-Then run:
+First, build the library:
+
+```bash
+cd libcds
+make
+cd ..
+```
+
+Then compile your program:
+
+```bash
+gcc main.c -Ilibcds/include libcds/libcds.a -o main
+```
+
+Run it with:
 
 ```bash
 ./main
 ```
 
-You can find more examples in the `examples/` directory.
+You can find more examples in the `libcds/examples/` directory.
 
 ## Implementation
 
